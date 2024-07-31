@@ -11,4 +11,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class FilmSerializer(serializers.ModelSerializer):
     class Meta:
         model = Film
-        fields = ['tytul', 'opis', 'po_premierze']
+        fields = ['id','tytul', 'opis', 'po_premierze']
+class FilmMiniSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Film
+        fields = ['tytul']
