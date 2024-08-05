@@ -5,6 +5,7 @@ from .models import Film
 from .serializers import FilmSerializer, FilmMiniSerializer
 from rest_framework.response import Response
 from django.http.response import HttpResponseNotAllowed
+from rest_framework.decorators import action
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
@@ -52,3 +53,12 @@ class FilmViewSet(viewsets.ModelViewSet):
         film = self.get_object()
         film.delete()
         return Response('Film usuniety')
+
+    @action(detail=False, methods=['post'])
+    def premiera_wszystkie(self, request, **kwargs):
+        filmy = Film.objects.all()
+        filmy.update(po_premierze=request.data['po_premierze'])
+
+        serializer = FilmSerializer(filmy, many=True)
+        return Response(serializer.data)
+
