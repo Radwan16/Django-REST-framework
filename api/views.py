@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
 from api.serializers import UserSerializer
 from .models import Film
-from .serializers import FilmSerializer, FilmMiniSerializer
+from .serializers import FilmSerializer
 from rest_framework.response import Response
 from django.http.response import HttpResponseNotAllowed
 from rest_framework.decorators import action
