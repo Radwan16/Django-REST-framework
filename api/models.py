@@ -24,4 +24,7 @@ class Film(models.Model):
     def nasza_nazwa(self):
         return self.tytul + "( " +str(self.rok)+ " )"
 
-
+class Recenzja(models.Model):
+    opis = models.TextField(default='')
+    gwiazdki = models.IntegerField(default=5)
+    film = models.ForeignKey(Film, on_delete=models.CASCADE, related_name='recenzje')
