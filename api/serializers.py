@@ -15,7 +15,15 @@ class ExtraInfoSerializer(serializers.ModelSerializer):
 class RecenzjaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recenzja
-        fields = ['opis','gwiazdki']
+        fields ='__all__'
+        # depth = 2
+        # read_only_fields = ('film','id')
+
+    def update(self, instance,validated_data):
+        instance.opis = validated_data.get('opis',instance.opis)
+        instance.gwiazdki = validated_data.get('gwiazdki',instance.gwiazdki)
+        instance.save()
+        return  instance
 
 class FilmSerializer(serializers.ModelSerializer):
     extra_info = ExtraInfoSerializer(many=False)
