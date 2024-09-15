@@ -31,6 +31,7 @@ class FilmSerializer(serializers.ModelSerializer):
     class Meta:
         model = Film
         fields = ['id','tytul', 'opis', 'po_premierze','premiera','rok','imdb_rating','extra_info','recenzje']
+        read_only_fields = ('extra_info','recenzje')
 
 class FilmMiniSerializer(serializers.ModelSerializer):
     class Meta:
