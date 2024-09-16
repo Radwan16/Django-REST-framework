@@ -4,8 +4,14 @@ from api.serializers import UserSerializer
 from .models import Film,Recenzja,Aktor
 from .serializers import FilmSerializer, RecenzjaSerializer,AktorSerializer
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 from django.http.response import HttpResponseNotAllowed
 from rest_framework.decorators import action
+
+class FilmSetPagination(PageNumberPagination):
+    page_size = 2
+    page_size_query_param = 'page_size'
+    max_page_size = 10
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
@@ -15,8 +21,11 @@ class FilmViewSet(viewsets.ModelViewSet):
     queryset = Film.objects.all()
     serializer_class = FilmSerializer
     filterset_fields = ['tytul', 'opis','rok']
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['tytul', 'opis']
+    ordering_fields = '__all__'
+    ordering = ('-rok',)
+    pagination_class = FilmSetPagination
 
     def get_queryset(self):
         # rok = self.request.query_params.get('rok' , None)
