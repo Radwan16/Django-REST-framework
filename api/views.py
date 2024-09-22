@@ -6,6 +6,7 @@ from .serializers import FilmSerializer, RecenzjaSerializer,AktorSerializer
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django.http.response import HttpResponseNotAllowed
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 
 class FilmSetPagination(PageNumberPagination):
@@ -26,6 +27,7 @@ class FilmViewSet(viewsets.ModelViewSet):
     ordering_fields = '__all__'
     ordering = ('-rok',)
     pagination_class = FilmSetPagination
+    authentication_classes = (TokenAuthentication, )
 
     def get_queryset(self):
         # rok = self.request.query_params.get('rok' , None)
