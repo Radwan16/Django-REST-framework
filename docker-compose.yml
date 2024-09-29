@@ -7,3 +7,10 @@ services:
       - .:/code
     ports:
       - "8000:8000"
+    develop:
+      watch:
+        - path: web/requirements.txt
+          action: rebuild
+        - path: movierater/
+          target: /code/movierater
+          action: sync
